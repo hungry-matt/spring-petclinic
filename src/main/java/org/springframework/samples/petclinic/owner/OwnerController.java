@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,9 +46,12 @@ class OwnerController {
 
 	private VisitRepository visits;
 
-	public OwnerController(OwnerRepository clinicService, VisitRepository visits) {
+	private PetRepository pets;
+
+	public OwnerController(OwnerRepository clinicService, VisitRepository visits, PetRepository pets) {
 		this.owners = clinicService;
 		this.visits = visits;
+		this.pets = pets;
 	}
 
 	@InitBinder
@@ -74,6 +78,7 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/find")
+//	@LogExecutionTime
 	public String initFindForm(Map<String, Object> model) {
 		model.put("owner", new Owner());
 		return "owners/findOwners";
